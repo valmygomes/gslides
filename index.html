@@ -6,23 +6,40 @@
 </head>
 <body>
     <h1>Conversor de Google Slides para PDF</h1>
-    <input type="text" id="url_gslide" placeholder="Cole a URL do Google Slides aqui">
-    <button onclick="convertToPDF()">Converter para PDF</button>
 
     <script>
-        function convertToPDF() {
-            const url = document.getElementById('url_gslide').value;
+        // Função para extrair parâmetros da URL
+        function getQueryParams() {
+            const queryParams = new URLSearchParams(window.location.search);
+            return {
+                url_gslide: queryParams.get('url_gslide')
+            };
+        }
+
+        // Função para converter a apresentação para PDF
+        function convertToPDF(url) {
             // Extrair a ID da apresentação a partir da URL fornecida
             const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
             if (match && match[1]) {
                 const presentationId = match[1];
                 const exportUrl = `https://docs.google.com/presentation/d/${presentationId}/export/pdf`;
                 // Abre a URL de exportação em uma nova aba para iniciar o download
-                window.open(exportUrl, '_blank');
+                window.location.href = exportUrl;
             } else {
                 alert('Por favor, insira uma URL válida do Google Slides.');
             }
         }
+
+        // Executar ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = getQueryParams();
+            if (params.url_gslide) {
+                convertToPDF(params.url_gslide);
+            } else {
+                // Se não houver URL, mostra uma mensagem ou oculta o conteúdo da página
+                document.body.innerHTML = 'Por favor, forneça a URL do Google Slides como parâmetro na URL.';
+            }
+        });
     </script>
 </body>
 </html>
