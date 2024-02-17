@@ -12,15 +12,16 @@
     <script>
         function convertToPDF() {
             const url = document.getElementById('url_gslide').value;
-            // Verifique se a URL é válida e corresponde ao formato esperado
-            if (!url || !url.includes('https://docs.google.com/presentation/')) {
+            // Extrair a ID da apresentação a partir da URL fornecida
+            const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (match && match[1]) {
+                const presentationId = match[1];
+                const exportUrl = `https://docs.google.com/presentation/d/${presentationId}/export/pdf`;
+                // Abre a URL de exportação em uma nova aba para iniciar o download
+                window.open(exportUrl, '_blank');
+            } else {
                 alert('Por favor, insira uma URL válida do Google Slides.');
-                return;
             }
-            // Substitua 'https://meusite.com.br/api/convert' pelo endpoint do seu servidor que processa a conversão
-            const apiEndpoint = 'https://meusite.com.br/api/convert?url_gslide=' + encodeURIComponent(url);
-            // Redirecionar para o endpoint da API ou abrir em nova aba para iniciar o download
-            window.open(apiEndpoint, '_blank');
         }
     </script>
 </body>
