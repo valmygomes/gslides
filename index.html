@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversor de Google Slides para PDF</title>
+</head>
+<body>
+    <h1>Conversor de Google Slides para PDF</h1>
+    <input type="text" id="url_gslide" placeholder="Cole a URL do Google Slides aqui">
+    <button onclick="convertToPDF()">Converter para PDF</button>
+
+    <script>
+        function convertToPDF() {
+            const url = document.getElementById('url_gslide').value;
+            // Verifique se a URL é válida e corresponde ao formato esperado
+            if (!url || !url.includes('https://docs.google.com/presentation/')) {
+                alert('Por favor, insira uma URL válida do Google Slides.');
+                return;
+            }
+            // Substitua 'https://meusite.com.br/api/convert' pelo endpoint do seu servidor que processa a conversão
+            const apiEndpoint = 'https://meusite.com.br/api/convert?url_gslide=' + encodeURIComponent(url);
+            // Redirecionar para o endpoint da API ou abrir em nova aba para iniciar o download
+            window.open(apiEndpoint, '_blank');
+        }
+    </script>
+</body>
+</html>
